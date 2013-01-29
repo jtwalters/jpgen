@@ -1,0 +1,16 @@
+numbers:
+  type: select
+  name: Include Number
+  default: 'no'
+  options: ['no', 'yes']
+symbols:
+  type: select
+  name: Include Symbol
+  default: 'no'
+  options: ['no', 'yes']
+length:
+  type: select
+  name: 'Length (&plusmn; 5)'
+  description: '&#9888; including a number or symbol with less than four-word passwords is recommended'
+  default: 23
+  options: [13,18,23,28,33]

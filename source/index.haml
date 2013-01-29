@@ -1,0 +1,20 @@
+%h1 Joel's Password Generator
+%h2 Ten Random Passwords
+%div#entropy_box.entropy-box
+  %p Mouse over (or tap) to shuffle these passwords with javascript.
+%table.passwords
+  %tr
+    %th password
+    %th length
+%form
+  %fieldset
+    %legend Options
+    - data.options.each do |key, option|
+      %div.field
+        %label{:for => key}= option['name']
+        %select{:id => key, :name => key}
+          - option['options'].each do |o|
+            %option{:value => o}= o
+        - if option['description']
+          %div.description= option['description']
+    %input{:type => "submit", :class => "button", :value => "Show me others ↺"}
