@@ -49,18 +49,18 @@ jQuery ->
     options = $('form').serializeObject()
 
     passwords = []
-    for i in [1..PASSWORD_COUNT]
+    for i in [1..PASSWORD_COUNT] by 1
       password = []
       # generate a password based on options
-      for j in [1..options.words]
+      for j in [1..options.words] by 1
         rand_selection = Math.floor(prng() * WORDS.length)
         password.push uc_first(WORDS[rand_selection])
       # insert number?
-      for k in [0...options.numbers]
+      for k in [0...options.numbers] by 1
         at = Math.floor(prng() * (password.length + 1))
         password.splice at, 0, Math.floor(prng() * 10)
       # insert symbol?
-      for k in [0...options.symbols]
+      for k in [0...options.symbols] by 1
         at = Math.floor(prng() * (password.length + 1))
         password.splice at, 0, SYMBOLS[Math.floor(prng() * SYMBOLS.length)]
       passwords.push password
