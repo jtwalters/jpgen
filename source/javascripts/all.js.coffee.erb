@@ -1,0 +1,77 @@
+#= require jquery-1.9.0.min
+#= require prng
+#= require jquery.ba-serializeobject
+#= require google-analytics-tracking
+
+PASSWORD_COUNT = 10
+WORDS = '<%= data.words.join(' ') %>'.split(' ')
+sum = 0
+for word in WORDS
+  sum += word.length
+WORDS_AVG_LENGTH = sum / WORDS.length
+SYMBOLS = '! @ # $ % ^ & * ( )'.split(' ')
+
+jQuery ->
+  $box = $('#entropy_box')
+  last_pos = {};
+  $passwords = $(".password")
+  $box.on 'mousemove', (event) ->
+    # adapted from http://stackoverflow.com/a/9047651
+    # check to make sure there is data to compare against
+    if typeof(last_pos.x) != 'undefined'
+      # get the change from last position to this position
+      deltaX = last_pos.x - event.clientX
+      deltaY = last_pos.y - event.clientY
+
+      # seed random number generator with the current date stamp (in milliseconds)
+      # and the deltaX and deltaY mouse values
+      prng = new Xorshift03(+new Date, deltaX, deltaY)
+
+      # generate passwords with our seeded random number generator and options
+      passwords = generate_passwords prng
+      display_passwords passwords
+
+    # set the new last position to the current for next time
+    last_pos =
+        x: event.clientX
+        y: event.clientY
+
+  display_passwords = (passwords) ->
+    $table_rows = $('table.passwords tbody tr')
+
+    $table_rows.each (i) ->
+      password = passwords[i].join('')
+      $(this.children[0]).text password
+      $(this.children[1]).text password.length
+
+  generate_passwords = (prng) ->
+    # serialize the form elements into an object with name: value pairs
+    options = $('form').serializeObject()
+
+    passwords = []
+    for i in [1..PASSWORD_COUNT]
+      password = []
+      # generate a password based on options
+      for j in [1..options.words]
+        rand_selection = Math.floor(prng() * WORDS.length)
+        password.push uc_first(WORDS[rand_selection])
+      # insert number?
+      for k in [0...options.numbers]
+        at = Math.floor(prng() * (password.length + 1))
+        password.splice at, 0, Math.floor(prng() * 10)
+      # insert symbol?
+      for k in [0...options.symbols]
+        at = Math.floor(prng() * (password.length + 1))
+        password.splice at, 0, SYMBOLS[Math.floor(prng() * SYMBOLS.length)]
+      passwords.push password
+    passwords
+
+  uc_first = (s) ->
+    s.charAt(0).toUpperCase() + s.slice(1)
+
+  # generate passwords on init and when select values change
+  update = -> display_passwords generate_passwords(new Xorshift03())
+
+  update()
+
+  $('select').on 'change', (event) -> update()

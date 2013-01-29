@@ -1,0 +1,23 @@
+%h2 Ten Random Passwords
+%div#entropy_box.entropy-box
+  %p Mouse over this box to generate passwords — or on a touch device, tap randomly.
+%table.passwords
+  %thead
+    %tr
+      %th password
+      %th length
+  - (1..10).each do |i|
+    %tr
+      %td.password —
+      %td.length —
+%form
+  %fieldset
+    %legend Options
+    - data.options.each do |key, option|
+      %div.field
+        %label{:for => key}= option['name']
+        %select{:id => key, :name => key}
+          - option['options'].each do |o|
+            %option{:value => o, :selected => (option['default'] == o ? 'selected' : nil)}= o
+        - if option['description']
+          %div.description= option['description']

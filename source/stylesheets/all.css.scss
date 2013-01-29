@@ -1,0 +1,81 @@
+@import "compass/css3";
+
+body {
+  padding: 1em 2em;
+}
+
+body, h1, h2, h3, h4 {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+}
+
+table {
+  border-spacing: 5px;
+  border-collapse: separate;
+}
+
+th, td {
+  padding-right: 1em;
+  text-align: left;
+}
+
+fieldset {
+  border: 2px dotted #ccc;
+}
+
+.disclaimer {
+  background: #eee;
+  color: #666;
+  text-transform: uppercase;
+  padding: 1em;
+}
+
+.button {
+  font-size: 1.1em;
+  margin: 0.5em 0;
+  padding: 0.5em 1em;
+  color: #000;
+  border: 1px outset #ddd;
+  @include border-radius(0.5em);
+  background-color: #beb;
+  @include background-image(linear-gradient(rgba(#fff, 0.9) 0%, rgba(#fff, 0.3) 25%, rgba(#fff, 0) 50%));
+  cursor: pointer;
+}
+
+.field {
+  padding: 0.5em;
+}
+
+.passwords {
+  margin: 1em 0;
+}
+
+.password {
+  background: #eef;
+  padding: 0.25em 0.5em;
+}
+
+.description {
+  font-size: 0.75em;
+  line-height: 1.33em;
+  color: #666;
+}
+
+.entropy-box {
+  height: 120px;
+  padding: 1em;
+  font-size: 1.2em;
+  line-height: 1.33em;
+  background: #eff;
+  border: 2px dotted #bee;
+
+  &:hover {
+    background: #bee;
+  }
+  @media screen and (min-width: 45em) {
+    float: right;
+    margin-left: 1%;
+    width: 45%;
+    height: 14em;
+  }
+}
