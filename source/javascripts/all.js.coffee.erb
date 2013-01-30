@@ -5,11 +5,11 @@
 
 PASSWORD_COUNT = 10
 WORDS = '<%= data.words.join(' ') %>'.split(' ')
-sum = 0
-for word in WORDS
-  sum += word.length
-WORDS_AVG_LENGTH = sum / WORDS.length
 SYMBOLS = '! @ # $ % ^ & * ( )'.split(' ')
+SEPARATORS =
+  '-': '-'
+  '(none)': ''
+  '(space)': ' '
 
 # provide ability to call a constructor with an array of args
 # from http://stackoverflow.com/a/1608546/417839
@@ -26,6 +26,7 @@ new_Xorshift03_with_args = ( ->
 jQuery ->
   $box = $('#entropy_box')
   entropy = []
+  options = {}
   $box.on 'mousemove', (event) ->
     # seed random number generator with the current date stamp (in milliseconds) plus
     # collected mouse movement entropy
@@ -43,7 +44,7 @@ jQuery ->
     $table_rows = $('table.passwords tbody tr')
 
     $table_rows.each (i) ->
-      password = passwords[i].join('')
+      password = passwords[i].join(SEPARATORS[options.separator])
       $(this.children[0]).text password
       $(this.children[1]).text password.length
 
@@ -57,7 +58,9 @@ jQuery ->
       # generate a password based on options
       for j in [1..options.words] by 1
         rand_selection = Math.floor(prng() * WORDS.length)
-        password.push uc_first(WORDS[rand_selection])
+        word = WORDS[rand_selection]
+        word = uc_first word if options.caps == 'yes'
+        password.push word
       # insert number?
       for k in [0...options.numbers] by 1
         at = Math.floor(prng() * (password.length + 1))
