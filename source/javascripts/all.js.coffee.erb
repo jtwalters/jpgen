@@ -11,30 +11,34 @@ for word in WORDS
 WORDS_AVG_LENGTH = sum / WORDS.length
 SYMBOLS = '! @ # $ % ^ & * ( )'.split(' ')
 
+# provide ability to call a constructor with an array of args
+# from http://stackoverflow.com/a/1608546/417839
+new_Xorshift03_with_args = ( ->
+  F = (args) ->
+    Xorshift03.apply this, args
+
+  F.prototype = Xorshift03.prototype
+
+  (args) ->
+    new F(args)
+)()
+
 jQuery ->
   $box = $('#entropy_box')
-  last_pos = {};
-  $passwords = $(".password")
+  entropy = []
   $box.on 'mousemove', (event) ->
-    # adapted from http://stackoverflow.com/a/9047651
-    # check to make sure there is data to compare against
-    if typeof(last_pos.x) != 'undefined'
-      # get the change from last position to this position
-      deltaX = last_pos.x - event.clientX
-      deltaY = last_pos.y - event.clientY
-
-      # seed random number generator with the current date stamp (in milliseconds)
-      # and the deltaX and deltaY mouse values
-      prng = new Xorshift03(+new Date, deltaX, deltaY)
-
-      # generate passwords with our seeded random number generator and options
-      passwords = generate_passwords prng
-      display_passwords passwords
-
-    # set the new last position to the current for next time
-    last_pos =
-        x: event.clientX
-        y: event.clientY
+    # seed random number generator with the current date stamp (in milliseconds) plus
+    # collected mouse movement entropy
+    entropy.push +new Date
+    entropy.push event.clientX
+    entropy.push event.clientY
+    # keep the entropy array at a reasonable length
+    entropy = entropy.slice (entropy.length - 50) if entropy.length > 100
+    # create a new Xorshift03 object with entropy array
+    prng = new_Xorshift03_with_args entropy
+    # generate passwords with our seeded random number generator and options
+    passwords = generate_passwords prng
+    display_passwords passwords
 
   display_passwords = (passwords) ->
     $table_rows = $('table.passwords tbody tr')
