@@ -74,7 +74,9 @@ jQuery ->
     s.charAt(0).toUpperCase() + s.slice(1)
 
   # generate passwords on init and when select values change
-  update = -> display_passwords generate_passwords(new Xorshift03())
+  update = ->
+    entropy.push +new Date
+    display_passwords generate_passwords(new_Xorshift03_with_args(entropy))
 
   update()
 
