@@ -2,12 +2,12 @@ numbers:
   type: select
   name: Include Numbers
   default: 0
-  options: [0, 1, 2, 3, 4, 5]
+  options: [0, 1, 2, 3, 4, 5, 6, 7, 8]
 symbols:
   type: select
   name: Include Symbols
   default: 0
-  options: [0, 1, 2, 3, 4, 5]
+  options: [0, 1, 2, 3, 4, 5, 6, 7, 8]
 words:
   type: select
   name: 'Number of Words'
