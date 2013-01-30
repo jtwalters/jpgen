@@ -4,6 +4,7 @@
     %meta{ :charset => "utf-8" }
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1.0' }
     = stylesheet_link_tag "normalize", "all"
+    = javascript_include_tag "all"
     %title= data.page.title
 
   %body{ :class => page_classes }
@@ -17,4 +18,3 @@
       %footer
         = partial :footer
     / ! end of #container
-    = javascript_include_tag "all"
