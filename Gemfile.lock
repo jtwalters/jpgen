@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/middleman/middleman-livereload.git
+  revision: 3fcdda7b580430f0cf3480827ec4698c98638453
+  specs:
+    middleman-livereload (3.0.1)
+      em-websocket (>= 0.2.0)
+      middleman-core (~> 3.0.2)
+      multi_json (~> 1.0)
+      rack-livereload
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -13,12 +23,17 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
+    em-websocket (0.4.0)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0.5.3)
+    eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     ffi (1.3.1)
     fssm (0.2.10)
     haml (3.1.7)
     hike (1.2.1)
+    http_parser.rb (0.5.3)
     http_router (0.10.2)
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
@@ -67,6 +82,8 @@ GEM
       i18n (~> 0.6)
       padrino-core (= 0.10.7)
     rack (1.4.4)
+    rack-livereload (0.3.11)
+      rack
     rack-protection (1.3.2)
       rack
     rack-test (0.6.2)
@@ -101,3 +118,4 @@ PLATFORMS
 
 DEPENDENCIES
   middleman (~> 3.0.11)
+  middleman-livereload!
