@@ -37,8 +37,7 @@ jQuery ->
     # create a new Xorshift03 object with entropy array
     prng = new_Xorshift03_with_args entropy
     # generate passwords with our seeded random number generator and options
-    passwords = generate_passwords prng
-    display_passwords passwords
+    display_passwords generate_passwords(prng)
 
   display_passwords = (passwords) ->
     $table_rows = $('table.passwords tbody tr')
