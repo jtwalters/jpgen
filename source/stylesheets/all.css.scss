@@ -1,7 +1,7 @@
 @import "compass/css3";
 
 body {
-  padding: 1em 2em;
+  padding: 1em 5%;
 }
 
 body, h1, h2, h3, h4 {
@@ -62,20 +62,18 @@ fieldset {
 }
 
 .entropy-box {
-  height: 120px;
+  min-height: 100px;
   padding: 1em;
-  font-size: 1.2em;
-  line-height: 1.33em;
-  background: #eff;
-  border: 2px dotted #bee;
+  background: #dff;
+  border: 2px dotted #aee;
 
   &:hover {
-    background: #bee;
+    background: #f99;
   }
   @media screen and (min-width: 45em) {
     float: right;
     margin-left: 1%;
     width: 45%;
-    height: 14em;
+    min-height: 14em;
   }
 }

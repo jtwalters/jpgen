@@ -11,6 +11,7 @@
 
 // The base font size.
 $base-font-size: 16px !default; // Override default set in Compass' Vertical Rhythm partial.
+$round-to-nearest-half-line: true;
 
 // The base line height determines the basic unit of vertical rhythm.
 // $base-line-height: 24px; // Override default set in Compass' Vertical Rhythm partial.
