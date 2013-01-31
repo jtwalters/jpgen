@@ -1,5 +1,5 @@
 #= require jquery-1.9.0.min
-#= require prng
+#= require sjcl/sjcl
 #= require jquery.ba-serializeobject
 #= require google-analytics-tracking
 
@@ -11,34 +11,14 @@ SEPARATORS =
   '(none)': ''
   '(space)': ' '
 
-# provide ability to call a constructor with an array of args
-# from http://stackoverflow.com/a/1608546/417839
-new_Xorshift03_with_args = ( ->
-  F = (args) ->
-    Xorshift03.apply this, args
-
-  F.prototype = Xorshift03.prototype
-
-  (args) ->
-    new F(args)
-)()
-
-jQuery ->
+start = ->
+  $('div#passwords').removeClass('not-ready')
+  $('div#entropy-helper').hide()
   $box = $('#entropy_box')
   entropy = []
   options = {}
   $box.on 'mousemove', (event) ->
-    # seed random number generator with the current date stamp (in milliseconds) plus
-    # collected mouse movement entropy
-    entropy.push +new Date
-    entropy.push event.clientX
-    entropy.push event.clientY
-    # keep the entropy array at a reasonable length
-    entropy = entropy.slice (entropy.length - 50) if entropy.length > 100
-    # create a new Xorshift03 object with entropy array
-    prng = new_Xorshift03_with_args entropy
-    # generate passwords with our seeded random number generator and options
-    display_passwords generate_passwords(prng)
+    display_passwords generate_passwords()
 
   display_passwords = (passwords) ->
     $table_rows = $('table.passwords tbody tr')
@@ -48,27 +28,31 @@ jQuery ->
       $(this.children[0]).text password
       $(this.children[1]).text password.length
 
-  generate_passwords = (prng) ->
+  generate_passwords = ->
     # serialize the form elements into an object with name: value pairs
     options = $('form').serializeObject()
 
     passwords = []
     for i in [1..PASSWORD_COUNT] by 1
+      words_needed = parseInt(options.words) + 2 * parseInt(options.numbers) + 2 * parseInt(options.symbols)
+      rand_words = sjcl.random.randomWords(words_needed)
+      # convert random words to floats (0..1), by multiplying the unsigned value by 2^-32
+      rand_values = (((w >>> 0) * 2.3283064365386963e-10) for w in rand_words)
       password = []
       # generate a password based on options
       for j in [1..options.words] by 1
-        rand_selection = Math.floor(prng() * WORDS.length)
+        rand_selection = Math.floor(rand_values.pop() * WORDS.length)
         word = WORDS[rand_selection]
         word = uc_first word if options.caps == 'yes'
         password.push word
       # insert number?
       for k in [0...options.numbers] by 1
-        at = Math.floor(prng() * (password.length + 1))
-        password.splice at, 0, Math.floor(prng() * 10)
+        at = Math.floor(rand_values.pop() * (password.length + 1))
+        password.splice at, 0, Math.floor(rand_values.pop() * 10)
       # insert symbol?
       for k in [0...options.symbols] by 1
-        at = Math.floor(prng() * (password.length + 1))
-        password.splice at, 0, SYMBOLS[Math.floor(prng() * SYMBOLS.length)]
+        at = Math.floor(rand_values.pop() * (password.length + 1))
+        password.splice at, 0, SYMBOLS[Math.floor(rand_values.pop() * SYMBOLS.length)]
       passwords.push password
     passwords
 
@@ -76,10 +60,20 @@ jQuery ->
     s.charAt(0).toUpperCase() + s.slice(1)
 
   # generate passwords on init and when select values change
-  update = ->
-    entropy.push +new Date
-    display_passwords generate_passwords(new_Xorshift03_with_args(entropy))
+  update = (event) ->
+    display_passwords generate_passwords()
 
   update()
 
   $('select').on 'change', (event) -> update()
+  $('#generate').on 'click', (event) ->
+    update()
+    false
+
+jQuery ->
+  if sjcl.random.isReady()
+    start()
+  else
+    sjcl.random.startCollectors()
+    sjcl.random.addEventListener 'seeded', -> start()
+    sjcl.random.addEventListener 'progress', (p) -> $('.progress-bar .inner').width((100 * p) + '%')
