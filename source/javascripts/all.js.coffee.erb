@@ -74,12 +74,22 @@ start = ->
 
   update()
 
-  $('select').on 'change', (event) -> update()
+  $('select').on 'change', (event) ->
+    update()
+    # save options to localStorage
+    localStorage.saved_options = JSON.stringify options
+
   $('#generate').on 'click', (event) ->
     update()
     false
 
 jQuery ->
+  # restore saved options from localStorage
+  saved_options_json = localStorage.saved_options
+  saved_options = JSON.parse localStorage.saved_options if saved_options_json
+  for k, v of saved_options
+    $('select[name="'+k+'"]').val(v)
+
   if sjcl.random.isReady()
     start()
   else
