@@ -74,4 +74,6 @@ configure :build do
 
   # Or use a different image path
   # set :http_path, "/Content/images/"
+
+  ignore /sjcl\/(?!sjcl\.js)/
 end
