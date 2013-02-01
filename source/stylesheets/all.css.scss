@@ -1,6 +1,7 @@
 @import "compass/css3";
 
 body {
+  background-color: #fff;
   padding: 1em 5%;
 }
 
@@ -17,6 +18,20 @@ table {
 th, td {
   padding-right: 1em;
   text-align: left;
+}
+
+a {
+  text-decoration: none;
+  color: #33f;
+  @include transition(color 0.4s);
+
+  &:hover {
+    color: #f33;
+  }
+}
+
+h1 a {
+  color: #555;
 }
 
 fieldset {
@@ -37,9 +52,21 @@ fieldset {
   color: #000;
   border: 1px outset #ddd;
   @include border-radius(0.5em);
-  background-color: #beb;
   @include background-image(linear-gradient(rgba(#fff, 0.9) 0%, rgba(#fff, 0.3) 25%, rgba(#fff, 0) 50%));
+  background-color: #beb;
   text-decoration: none;
+  @include transition(background-color 0.2s);
+  @include box-shadow(2px 2px 4px #bbb);
+
+  &:hover {
+    color: #000;
+    background-color: #bfb;
+  }
+
+  &:active {
+    background-color: #3b3;
+    @include box-shadow(1px 1px 1px #bbb);
+  }
 }
 
 .field {
@@ -59,23 +86,6 @@ table.passwords {
   font-size: 0.75em;
   line-height: 1.33em;
   color: #666;
-}
-
-.entropy-box {
-  min-height: 100px;
-  padding: 1em;
-  background: #dff;
-  border: 2px dotted #aee;
-
-  &:hover {
-    background: #f99;
-  }
-  @media screen and (min-width: 45em) {
-    float: right;
-    margin-left: 1%;
-    width: 45%;
-    min-height: 14em;
-  }
 }
 
 .progress-bar {
@@ -100,4 +110,29 @@ table.passwords {
 
 .subheading {
   margin-top: 0;
+}
+
+.animated {
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+}
+
+/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+
+@-webkit-keyframes flash {
+  0% { background-color: #ff9; }
+  100% { background-color: #fff; }
+}
+
+
+@keyframes flash {
+  0% { background-color: #ff9; }
+  100% { background-color: #fff; }
+}
+
+.flash {
+  -webkit-animation-name: flash;
+  animation-name: flash;
 }

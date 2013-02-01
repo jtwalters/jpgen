@@ -28,6 +28,15 @@ start = ->
       $(this.children[0]).text password
       $(this.children[1]).text password.length
 
+    # flash fade
+    $animate = $('table.passwords')
+    $animate
+      .addClass('flash')
+    window.setTimeout ->
+      $animate
+        .removeClass('flash')
+    , 500
+
   generate_passwords = ->
     # serialize the form elements into an object with name: value pairs
     options = $('form').serializeObject()

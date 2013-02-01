@@ -10,7 +10,8 @@
   %body{ :class => page_classes }
     #container
       %header
-        %h1.with-subheading= data.page.title
+        %h1.with-subheading
+          %a(href='/')= data.page.title
         %p.subheading
           %em
             built with the
