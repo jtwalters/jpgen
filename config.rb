@@ -76,4 +76,5 @@ configure :build do
   # set :http_path, "/Content/images/"
 
   ignore /sjcl\/(?!sjcl\.js)/
+  ignore /psd\/.*/
 end
