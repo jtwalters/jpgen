@@ -5,19 +5,18 @@
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1.0' }
     = stylesheet_link_tag "normalize", "all"
     = javascript_include_tag "all"
-    %title= data.page.title
+    %title= data.site.title
 
   %body{ :class => page_classes }
     #container
       %header
-        %h1.with-subheading
-          %a(href='/')= data.page.title
-        %p.subheading
-          %em
-            built with the
-            %a(href='http://crypto.stanford.edu/sjcl/') Stanford Javascript Crypto Library
-
-      #main{ :role => 'main' }
+        %h1= data.site.title + ' v' + data.site.version
+        %nav
+          %ul
+            - data.site.panes.each do |p|
+              %li
+                %a{href: '#' + p}= p
+      #main{:role => 'main'}
         = yield
 
       %footer

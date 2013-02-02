@@ -1,23 +1,24 @@
-/ github banner
-<a href="https://github.com/jtwalters/jpgen"><img style="position: absolute; top: 0; right: 0; border: 0; opacity: 0.8" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-%div#entropy-helper
-  %h2 Entropy Collector
-  %p Your browser needs help generating entropy. Mouse or tap randomly across the window until you fill the progress bar below.
-  %div.progress-bar
-    %div.inner
-%div#passwords.not-ready
-  %h2 Ten Random Passwords
-  %table.passwords.animated
-    %thead
-      %tr
-        %th password
-        %th length
-    - (1..10).each do |i|
-      %tr
-        %td.password —
-        %td.length —
-  %p
-    %a#generate.button(href='#') Show me others &#8635;
+%div#generator.pane
+  %div#entropy-helper
+    %h2 Entropy Collector
+    %p Your browser needs help generating entropy. Mouse or tap randomly across the window until you fill the progress bar below.
+    %div.progress-bar
+      %div.inner
+  %div#passwords.not-ready
+    %h2.element-invisible Ten Random Passwords
+    %table.passwords.animated
+      %thead
+        %tr
+          %th password
+          %th size
+      - (1..10).each do |i|
+        %tr
+          %td.password
+            %input(type='text' value='—')
+          %td.length —
+    %p
+      %a#generate.button(href='#') Show me others &#8635;
+%div#options.pane
   %form
     %fieldset
       %legend Options
@@ -29,8 +30,8 @@
               %option{:value => o, :selected => (option['default'] == o ? 'selected' : nil)}= o
           - if option['description']
             %div.description= option['description']
-= partial :README
-:markdown
-  ## Discuss
+    %p
+      %a#reset.button(href='#') Reset &#8635;
 
-  * [Discuss Joel's Password Generator](discuss)
+%div#about.pane
+  = partial :README

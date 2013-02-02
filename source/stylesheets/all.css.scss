@@ -1,13 +1,82 @@
 @import "compass/css3";
+@import "compass/typography/vertical_rhythm";
 
 body {
-  background-color: #fff;
-  padding: 1em 5%;
+  background-color: #bcd6e8;
+  min-width: 320px;
+  padding: 0;
 }
 
 body, h1, h2, h3, h4 {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
+}
+
+.highlight {
+  @include background-image(linear-gradient(rgba(#fff, 0.8) 0%, rgba(#fff, 0.3) 25%, rgba(#fff, 0) 50%));
+}
+
+header, footer {
+  background-color: #bcd6e8;
+  @extend .highlight;
+  padding: 10px;
+}
+
+header {
+  border-bottom: 1px solid #666;
+  nav {
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+        display: inline-block;
+        margin: 0 2px;
+        a {
+          display: inline-block;
+          padding: 0.25em 0.5em;
+          @include border-radius(0.25em);
+          background-color: #aaa;
+          color: #000;
+          &:hover {
+            background-color: #777;
+            color: #fff;
+          }
+          &.active {
+            @include box-shadow(inset 2px 2px 2px #555);
+            background-color: #888;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+footer {
+  border-top: 1px solid #666;
+
+  p {
+    margin: 0;
+  }
+}
+
+.element-invisible {
+  position: absolute;
+
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+header h1 {
+  margin: 0;
+}
+
+#container {
+  background-color: #f9f9f9;
+}
+
+#main {
+  padding: 0 10px;
 }
 
 table {
@@ -16,13 +85,12 @@ table {
 }
 
 th, td {
-  padding-right: 1em;
   text-align: left;
 }
 
 a {
   text-decoration: none;
-  color: #33f;
+  color: #3080ec;
   @include transition(color 0.4s);
 
   &:hover {
@@ -31,10 +99,11 @@ a {
 }
 
 h1 a {
-  color: #555;
+  color: #000;
 }
 
 fieldset {
+  margin: 1em 0;
   border: 2px dotted #ccc;
 }
 
@@ -46,13 +115,13 @@ fieldset {
 }
 
 .button {
+  @extend .highlight;
   font-size: 1.1em;
   margin: 0.5em 0;
   padding: 0.5em 1em;
   color: #000;
   border: 1px outset #ddd;
   @include border-radius(0.5em);
-  @include background-image(linear-gradient(rgba(#fff, 0.9) 0%, rgba(#fff, 0.3) 25%, rgba(#fff, 0) 50%));
   background-color: #beb;
   text-decoration: none;
   @include transition(background-color 0.2s);
@@ -75,11 +144,23 @@ fieldset {
 
 table.passwords {
   margin: 1em 0;
+  table-layout: fixed;
 }
 
 .password {
-  background: #eef;
-  padding: 0.25em 0.5em;
+  input {
+    @include box-sizing(border-box);
+    min-width: 240px;
+    background: #fff;
+    padding: 0.25em 0.5em;
+    border: 1px inset #ccc;
+    @include border-radius(3px);
+    word-wrap: break-word;
+
+    &:hover {
+      background: #ffd;
+    }
+  }
 }
 
 .description {
@@ -104,10 +185,6 @@ table.passwords {
   pointer-events: none;
 }
 
-.with-subheading {
-  margin-bottom: 0;
-}
-
 .subheading {
   margin-top: 0;
 }
@@ -115,21 +192,20 @@ table.passwords {
 .animated {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
-  -webkit-animation-duration: 0.4s;
-  animation-duration: 0.4s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
 }
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
 
 @-webkit-keyframes flash {
-  0% { background-color: #ff9; }
-  100% { background-color: #fff; }
+  0% { background-color: #ff7; }
+  100% { background-color: #f9f9f9; }
 }
 
-
 @keyframes flash {
-  0% { background-color: #ff9; }
-  100% { background-color: #fff; }
+  0% { background-color: #ff7; }
+  100% { background-color: #f9f9f9; }
 }
 
 .flash {

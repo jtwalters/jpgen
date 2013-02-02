@@ -44,7 +44,13 @@ activate :directory_indexes
 
 # Methods defined in the helpers block are available in templates
 helpers do
-
+  def defaults_json
+    defaults = Hash.new
+    data.options.each do |k, v|
+      defaults[k] = v[:default]
+    end
+    defaults.to_json
+  end
 end
 
 set :css_dir, 'stylesheets'

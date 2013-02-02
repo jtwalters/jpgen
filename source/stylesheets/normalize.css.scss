@@ -10,19 +10,18 @@
 // =============================================================================
 
 // The base font size.
-$base-font-size: 16px !default; // Override default set in Compass' Vertical Rhythm partial.
-$round-to-nearest-half-line: true;
+$base-font-size: 14px !default; // Override default set in Compass' Vertical Rhythm partial.
 
 // The base line height determines the basic unit of vertical rhythm.
-// $base-line-height: 24px; // Override default set in Compass' Vertical Rhythm partial.
+$base-line-height: 17px; // Override default set in Compass' Vertical Rhythm partial.
 
 // The font sizes for h1-h6.
-$h1-font-size: 2    * $base-font-size !default;
-$h2-font-size: 1.5  * $base-font-size !default;
-$h3-font-size: 1.17 * $base-font-size !default;
+$h1-font-size: 1.5  * $base-font-size !default;
+$h2-font-size: 1.4  * $base-font-size !default;
+$h3-font-size: 1.2  * $base-font-size !default;
 $h4-font-size: 1    * $base-font-size !default;
-$h5-font-size: 0.83 * $base-font-size !default;
-$h6-font-size: 0.67 * $base-font-size !default;
+$h5-font-size: 1    * $base-font-size !default;
+$h6-font-size: 1    * $base-font-size !default;
 
 // Set this to true to add support for IE 6.
 // $legacy-support-for-ie6: true; // Override default set in Compass' Support partial.
@@ -34,7 +33,7 @@ $h6-font-size: 0.67 * $base-font-size !default;
 $base-font-family: sans-serif !default;
 
 // The amount lists and blockquotes are indented.
-$indent-amount: 40px !default;
+$indent-amount: 26px !default;
 
 // After the default variables are set, import the required Compass partials.
 @import "compass/support";
@@ -294,7 +293,7 @@ q {
  * Address inconsistent and variable font size in all browsers.
  */
 
-small {
+small, .small {
     font-size: 80%;
 }
 

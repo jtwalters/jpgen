@@ -3,6 +3,8 @@
 #= require jquery.ba-serializeobject
 #= require google-analytics-tracking
 
+DEFAULTS = <%= defaults_json %>
+
 PASSWORD_COUNT = 10
 WORDS = '<%= data.words.join(' ') %>'.split(' ')
 SYMBOLS = '! @ # $ % ^ & * ( )'.split(' ')
@@ -11,84 +13,102 @@ SEPARATORS =
   '(none)': ''
   '(space)': ' '
 
+entropy = []
+options = {}
+
+display_passwords = (passwords) ->
+  $table_rows = $('table.passwords tbody tr')
+
+  $table_rows.each (i) ->
+    password = passwords[i].join(SEPARATORS[options.separator])
+    $(this.children[0].children[0]).val password
+    $(this.children[1]).text password.length
+
+  # flash fade
+  $animate = $('table.passwords')
+  $animate
+    .addClass('flash')
+  window.setTimeout ->
+    $animate
+      .removeClass('flash')
+  , 500
+
+generate_passwords = ->
+  # serialize the form elements into an object with name: value pairs
+  options = $('form').serializeObject()
+
+  passwords = []
+  for i in [1..PASSWORD_COUNT] by 1
+    words_needed = parseInt(options.words) + 2 * parseInt(options.numbers) + 2 * parseInt(options.symbols)
+    rand_words = sjcl.random.randomWords(words_needed)
+    # convert random words to floats (0..1), by multiplying the unsigned value by 2^-32
+    rand_values = (((w >>> 0) * 2.3283064365386963e-10) for w in rand_words)
+    password = []
+    # generate a password based on options
+    for j in [1..options.words] by 1
+      rand_selection = Math.floor(rand_values.pop() * WORDS.length)
+      word = WORDS[rand_selection]
+      word = uc_first word if options.caps == 'yes'
+      password.push word
+    # insert number?
+    for j in [0...options.numbers] by 1
+      at = Math.floor(rand_values.pop() * (password.length + 1))
+      password.splice at, 0, Math.floor(rand_values.pop() * 10)
+    # insert symbol?
+    for j in [0...options.symbols] by 1
+      at = Math.floor(rand_values.pop() * (password.length + 1))
+      password.splice at, 0, SYMBOLS[Math.floor(rand_values.pop() * SYMBOLS.length)]
+    passwords.push password
+  passwords
+
+uc_first = (s) ->
+  s.charAt(0).toUpperCase() + s.slice(1)
+
+# generate passwords on init and when select values change
+update = (event) ->
+  display_passwords generate_passwords()
+
 start = ->
   $('div#passwords').removeClass('not-ready')
   $('div#entropy-helper').hide()
-  $box = $('#entropy_box')
-  entropy = []
-  options = {}
-  $box.on 'mousemove', (event) ->
-    display_passwords generate_passwords()
-
-  display_passwords = (passwords) ->
-    $table_rows = $('table.passwords tbody tr')
-
-    $table_rows.each (i) ->
-      password = passwords[i].join(SEPARATORS[options.separator])
-      $(this.children[0]).text password
-      $(this.children[1]).text password.length
-
-    # flash fade
-    $animate = $('table.passwords')
-    $animate
-      .addClass('flash')
-    window.setTimeout ->
-      $animate
-        .removeClass('flash')
-    , 500
-
-  generate_passwords = ->
-    # serialize the form elements into an object with name: value pairs
-    options = $('form').serializeObject()
-
-    passwords = []
-    for i in [1..PASSWORD_COUNT] by 1
-      words_needed = parseInt(options.words) + 2 * parseInt(options.numbers) + 2 * parseInt(options.symbols)
-      rand_words = sjcl.random.randomWords(words_needed)
-      # convert random words to floats (0..1), by multiplying the unsigned value by 2^-32
-      rand_values = (((w >>> 0) * 2.3283064365386963e-10) for w in rand_words)
-      password = []
-      # generate a password based on options
-      for j in [1..options.words] by 1
-        rand_selection = Math.floor(rand_values.pop() * WORDS.length)
-        word = WORDS[rand_selection]
-        word = uc_first word if options.caps == 'yes'
-        password.push word
-      # insert number?
-      for k in [0...options.numbers] by 1
-        at = Math.floor(rand_values.pop() * (password.length + 1))
-        password.splice at, 0, Math.floor(rand_values.pop() * 10)
-      # insert symbol?
-      for k in [0...options.symbols] by 1
-        at = Math.floor(rand_values.pop() * (password.length + 1))
-        password.splice at, 0, SYMBOLS[Math.floor(rand_values.pop() * SYMBOLS.length)]
-      passwords.push password
-    passwords
-
-  uc_first = (s) ->
-    s.charAt(0).toUpperCase() + s.slice(1)
-
-  # generate passwords on init and when select values change
-  update = (event) ->
-    display_passwords generate_passwords()
-
   update()
 
-  $('select').on 'change', (event) ->
-    update()
-    # save options to localStorage
-    localStorage.saved_options = JSON.stringify options
+jQuery ->
+  # handle tabbed panes
+  $panes = $('.pane')
+  $nav_links = $('nav a')
+  $nav_links.click ->
+    $nav_links.removeClass 'active'
+    $(this).addClass 'active'
+    pane = $(this).attr 'href'
+    $(pane).show()
+    $panes.not(pane).hide()
+    false
+  $nav_links.first().trigger 'click'
 
-  $('#generate').on 'click', (event) ->
+  # reset button clears localStorage
+  $('#reset').click ->
+    localStorage.removeItem 'saved_options'
+    $('select[name="'+k+'"]').val(v) for k, v of DEFAULTS
     update()
     false
 
-jQuery ->
   # restore saved options from localStorage
   saved_options_json = localStorage.saved_options
   saved_options = JSON.parse localStorage.saved_options if saved_options_json
   for k, v of saved_options
     $('select[name="'+k+'"]').val(v)
+
+  # handle some ui events
+  $('select').on 'change', (event) ->
+    update()
+    # save options to localStorage
+    localStorage.saved_options = JSON.stringify options
+  $('#generate').on 'click', (event) ->
+    update()
+    false
+  $('.password input').click (event) ->
+    $(this).select()
 
   if sjcl.random.isReady()
     start()
