@@ -2,12 +2,9 @@
   "manifest_version": 2,
 
   "name": "Joel's Password Generator",
-  "description": "A password generator built with security and password-memorability in mind, with randomness provided by the Stanford Javascript Crypto Library.",
-  "version": "1.0.0",
+  "description": "A password generator built with security and password-memorability in mind.",
+  "version": "3.3.0",
 
-  "permissions": [
-    "clipboardWrite"
-  ],
   "browser_action": {
     "default_title": "Joel's Password Generator",
     "default_icon": "images/icon.png",
