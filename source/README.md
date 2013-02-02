@@ -1,6 +1,6 @@
 ## What is this?
 
-Inspired by the [xkcd Password Strength comic](http://xkcd.com/936/), this site provides you with ten relatively complex, yet easy to remember passwords. Optionally, you can include numbers or symbols for additional complexity (or to satisfy certain password requirements), and adjust the number of words.
+Inspired by the [xkcd Password Strength comic](http://xkcd.com/936/), this application provides you with ten relatively complex, yet easy to remember passwords. Optionally, you can include numbers or symbols for additional complexity (or to satisfy certain password requirements), and adjust the number of words.
 
 ## Why should I use passwords like these?
 
@@ -20,7 +20,7 @@ Certain websites may have a password length limit of about 20 characters. Take n
 
 ## How are these passwords secure?
 
-The dictionary used contains approximately 4,000 commonly used English words. Each word is chosen at random using a pseudorandom number generator. As an additional security measure, version 2.0 of this site now generates passwords using JavaScript (on the client side)—in other words, the passwords are never sent across the web and my website has no knowledge of the passwords generated.
+The dictionary used contains approximately 3,500 commonly used English words. Each word is chosen at random using a pseudorandom number generator. As an additional security measure, version 2.0+ of this application now generates passwords using JavaScript (on the client side)—in other words, the passwords are never sent across the web.
 
 To demonstrate how these passwords are secure, let's consider how someone might guess your password.
 
