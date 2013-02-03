@@ -81,7 +81,7 @@ jQuery ->
     $nav_links.removeClass 'active'
     $(this).addClass 'active'
     pane = $(this).attr 'href'
-    $(pane).show()
+    $(pane).slideDown(250)
     $panes.not(pane).hide()
     false
   $nav_links.first().trigger 'click'
