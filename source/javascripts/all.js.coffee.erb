@@ -1,7 +1,7 @@
 #= require jquery-1.9.0.min
 #= require sjcl/sjcl
 #= require jquery.ba-serializeobject
-#= require google-analytics-tracking
+<% require_asset 'google-analytics-tracking' unless target? :chrome %>
 
 DEFAULTS = <%= defaults_json %>
 

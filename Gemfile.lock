@@ -8,6 +8,14 @@ GIT
       multi_json (~> 1.0)
       rack-livereload
 
+GIT
+  remote: git://github.com/xunker/middleman-target.git
+  revision: 14ac1444803b5551839ea2c941e4f574ac06bc81
+  branch: master
+  specs:
+    middleman-target (0.0.1)
+      middleman (~> 3.0.11)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -119,3 +127,4 @@ PLATFORMS
 DEPENDENCIES
   middleman (~> 3.0.11)
   middleman-livereload!
+  middleman-target!

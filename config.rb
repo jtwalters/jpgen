@@ -34,6 +34,7 @@
 # end
 
 activate :directory_indexes
+activate :target
 
 ###
 # Helpers
@@ -81,6 +82,15 @@ configure :build do
   # Or use a different image path
   # set :http_path, "/Content/images/"
 
+  # ignore these patterns for all builds
   ignore /sjcl\/(?!sjcl\.js)/
   ignore /psd\/.*/
+
+  # ignore for specific builds
+  if target? :chrome
+    ignore 'javascripts/google-analytics-tracking.js'
+    ignore 'javascripts/random-test.js'
+    ignore 'javascripts/pnglib.js'
+    ignore 'random-test.html.haml'
+  end
 end
