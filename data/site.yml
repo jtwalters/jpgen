@@ -1,3 +1,7 @@
 version: '3.6'
 title: Joel's Password Generator
-panes: [generator, options, about]
+nav:
+  - {href: 'index.html#generator', title: generator}
+  - {href: 'index.html#options', title: options}
+  - {href: 'index.html#about', title: about}
+  - {href: 'LICENSE.html', title: license}

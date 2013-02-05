@@ -13,9 +13,9 @@
         %h1= data.site.title + ' v' + data.site.version
         %nav
           %ul
-            - data.site.panes.each do |p|
+            - data.site.nav.each do |link|
               %li
-                %a{href: '#' + p}= p
+                = link_to link['title'], link['href'], class: (current_path == link['href'] ? 'active' : nil)
       #main{:role => 'main'}
         = yield
 

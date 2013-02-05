@@ -76,15 +76,22 @@ start = ->
 jQuery ->
   # handle tabbed panes
   $panes = $('.pane')
-  $nav_links = $('nav a')
+  $nav_links = $("nav a")
   $nav_links.click ->
+    href = $(this).attr('href').slice(1)
+    return true if $(href).length == 0
     $nav_links.removeClass 'active'
     $(this).addClass 'active'
-    pane = $(this).attr 'href'
-    $(pane).slideDown(250)
-    $panes.not(pane).hide()
+    $(href).slideDown(250)
+    $panes.not(href).hide()
     false
-  $nav_links.first().trigger 'click'
+  # determine what page or pane we're on
+  if ($nav_links.find('.active').length == 0)
+    # default to the first link or one matching the current window.location.hash
+    $default_link = $nav_links.first()
+    $test_link = $nav_links.filter('[href*='+window.location.hash+']')
+    $default_link = $test_link if $test_link.length > 0
+    $default_link.trigger 'click'
 
   # reset button clears localStorage
   $('#reset').click ->
