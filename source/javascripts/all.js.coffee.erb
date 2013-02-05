@@ -78,12 +78,11 @@ jQuery ->
   $panes = $('.pane')
   $nav_links = $("nav a")
   $nav_links.click ->
-    href = $(this).attr('href').slice(1)
-    return true if $(href).length == 0
+    return true if $(this.hash).length == 0
     $nav_links.removeClass 'active'
     $(this).addClass 'active'
-    $(href).slideDown(250)
-    $panes.not(href).hide()
+    $(this.hash).slideDown(250)
+    $panes.not(this.hash).hide()
     false
   # determine what page or pane we're on
   if ($nav_links.find('.active').length == 0)
