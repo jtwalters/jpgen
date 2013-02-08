@@ -33,7 +33,9 @@
 #   @which_fake_page = "Rendering a fake page with a variable"
 # end
 
-activate :target
+activate :target do |t|
+  t.build_targets = {}
+end
 
 ###
 # Helpers
