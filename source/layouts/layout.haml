@@ -8,6 +8,9 @@
     %title= data.site.title
 
   %body{ :class => page_classes }
+    - unless target? :chrome
+      / github banner
+      <a href="https://github.com/jtwalters/jpgen"><img style="position: absolute; top: 0; right: 0; border: 0; opacity: 0.8" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
     #container
       %header
         %h1= data.site.title + ' v' + data.site.version
