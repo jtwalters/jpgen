@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 title: Joel's Password Generator
 nav:
   - {href: 'index.html#generator', title: generator}
