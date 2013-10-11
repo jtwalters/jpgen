@@ -86,8 +86,8 @@ configure :build do
   # set :http_path, "/Content/images/"
 
   # ignore these patterns for all builds
-  ignore /sjcl\/(?!sjcl\.js)/
-  ignore /psd\/.*/
+  ignore (/sjcl\/(?!sjcl\.js)/)
+  ignore (/psd\/.*/)
 
   # ignore for specific builds
   if target? :chrome

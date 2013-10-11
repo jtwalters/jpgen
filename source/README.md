@@ -1,3 +1,5 @@
+# About Joel's Password Generator
+
 ## What is this?
 
 Inspired by the [xkcd Password Strength comic](http://xkcd.com/936/), this application provides you with ten relatively complex, yet easy to remember passwords. Optionally, you can include numbers or symbols for additional complexity (or to satisfy certain password requirements), and adjust the number of words.
