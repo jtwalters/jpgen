@@ -1,4 +1,4 @@
-Copyright 2013 Joel Walters
+Copyright 2014 Joel Walters
 
 The MIT License (MIT)
 

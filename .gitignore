@@ -15,3 +15,6 @@
 
 # Ignore other pesky stuff
 .DS_Store
+
+# Ignore downloadable components
+bower_components/

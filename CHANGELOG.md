@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v3.9.0 (2014-11-30)
+
+- Adjusted font size to compensate for change in Google Chrome extensions' default font styles.
+- Developer Notes
+  - Updated Gemfile (dependencies)
+  - Added bower.json
+  - Attempt to use SemVer version numbering
+
 ## v3.8 (2013-10-11)
 
 - Updated jQuery library to 1.10.2

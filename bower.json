@@ -1,0 +1,20 @@
+{
+  "name": "jpgen",
+  "version": "3.9.0",
+  "homepage": "https://github.com/jtwalters/jpgen",
+  "authors": [
+    "Joel Walters <jtwalters@gmail.com>"
+  ],
+  "description": "Joel's Password Generator, Chrome Extension",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sjcl": "~1.0.0"
+  }
+}

@@ -5,6 +5,7 @@
 # Susy grids in Compass
 # First: gem install susy
 # require 'susy'
+require 'compass-normalize'
 
 # Change Compass configuration
 # compass_config do |config|
@@ -61,9 +62,10 @@ set :images_dir, 'images'
 set :strip_index_file, false if target? :chrome
 set :relative_links, true
 
+activate :livereload
+
 # Build-specific configuration
 configure :build do
-  activate :livereload
 
   # For example, change the Compass output style for deployment
   activate :minify_css

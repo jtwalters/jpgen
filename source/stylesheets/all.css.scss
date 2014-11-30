@@ -1,10 +1,13 @@
 @import "compass/css3";
 @import "compass/typography/vertical_rhythm";
+@import "normalize";
+
 
 body {
   background-color: #bcd6e8;
   min-width: 320px;
   padding: 0;
+  font-size: 14px;
 }
 
 body, h1, h2, h3, h4 {
@@ -98,6 +101,10 @@ a {
   }
 }
 
+h1 {
+  font-size: 1.5rem;
+}
+
 h1 a {
   color: #000;
 }
@@ -115,9 +122,10 @@ fieldset {
 }
 
 .button {
+  display: inline-block;
   @extend .highlight;
-  font-size: 1.1em;
-  margin: 0.5em 0;
+  font-size: 1.1rem;
+  margin-bottom: 0.5em;
   padding: 0.5em 1em;
   color: #000;
   border: 1px outset #ddd;
@@ -164,8 +172,8 @@ table.passwords {
 }
 
 .description {
-  font-size: 0.75em;
-  line-height: 1.33em;
+  font-size: 0.75rem;
+  line-height: 1.33rem;
   color: #666;
 }
 
